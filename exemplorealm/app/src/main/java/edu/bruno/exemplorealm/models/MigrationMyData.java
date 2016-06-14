@@ -1,7 +1,5 @@
 package edu.bruno.exemplorealm.models;
 
-import android.util.Log;
-
 import io.realm.DynamicRealm;
 import io.realm.RealmMigration;
 import io.realm.RealmSchema;
@@ -23,8 +21,5 @@ public class MigrationMyData implements RealmMigration {
                     .addField("strings", String.class);
             oldVersion++;
         }
-
-        Log.i("script", "oldVersion " + oldVersion);
-        Log.i("script", "newVersion " + newVersion);
     }
 }

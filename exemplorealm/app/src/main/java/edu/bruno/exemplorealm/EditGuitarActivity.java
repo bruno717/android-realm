@@ -15,7 +15,7 @@ import io.realm.RealmChangeListener;
 /**
  * Created by bruno.oliveira on 6/10/16.
  */
-public class EditGuitarActivity extends AppCompatActivity {
+public class EditGuitarActivity extends AppCompatActivity implements RealmChangeListener<Realm> {
 
     public static final String INTENT_KEY_EDIT_ID = "INTENT_KEY_EDIT_ID";
 
@@ -49,18 +49,18 @@ public class EditGuitarActivity extends AppCompatActivity {
         mGuitar.setColor(mEditTextColor.getText().toString());
         mRealm.commitTransaction();
 
-        mRealm.addChangeListener(new RealmChangeListener<Realm>() {
-            @Override
-            public void onChange(Realm element) {
-                onBackPressed();
-                mRealm.removeAllChangeListeners();
-            }
-        });
+        mRealm.addChangeListener(this);
+    }
+
+    @Override
+    public void onChange(Realm element) {
+        onBackPressed();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mRealm.removeChangeListener(this);
         mRealm.close();
     }
 }
